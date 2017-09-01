@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+class CurrencySettings {
+    private double currencyValue;
+    private String currencyIdentifier;
 
-    public static class CurrencySettings {
-        double currencyValue;
-        String currencyIdentifier;
-
-        void setCurrencyValue(double currencyValue) {
-            this.currencyValue = currencyValue;
-        }
-
-        void setCurrencyIdentifier(String currencyIdentifier) {
-            this.currencyIdentifier = currencyIdentifier;
-        }
-
-        private double getCurrencyValue() {
-            return this.currencyValue;
-        }
-
-        private String getCurrencyIdentifier() {
-            return this.currencyIdentifier;
-        }
+    void setCurrencyValue(double currencyValue) {
+        this.currencyValue = currencyValue;
     }
+
+    void setCurrencyIdentifier(String currencyIdentifier) {
+        this.currencyIdentifier = currencyIdentifier;
+    }
+
+    double getCurrencyValue() {
+        return this.currencyValue;
+    }
+
+    String getCurrencyIdentifier() {
+        return this.currencyIdentifier;
+    }
+}
+
+public class Main {
 
     public static void startShoppingHelper(Scanner inputReader, CurrencySettings currency) {
         System.out.println("\n----------------------------------- Shopping Helper Functions -----------------------------------");
