@@ -6,33 +6,73 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void startShoppingHelper(Scanner inputReader) {
-        System.out.println("\nShopping Helper Functions -----------------------------------");
-        System.out.println("\nWhat do you want to do?");
-        System.out.println("1 - Convert one value from SEK to another currency");
-        System.out.println("2 - Convert multiple values from SEK to another currency");
-        
+    public static class CurrencySettings {
+        double currencyValue;
+        String currencyIdentifier;
+
+        void setCurrencyValue(double currencyValue) {
+            this.currencyValue = currencyValue;
+        }
+
+        void setCurrencyIdentifier(String currencyIdentifier) {
+            this.currencyIdentifier = currencyIdentifier;
+        }
+
+        private double getCurrencyValue() {
+            return this.currencyValue;
+        }
+
+        private String getCurrencyIdentifier() {
+            return this.currencyIdentifier;
+        }
+    }
+
+    public static void startShoppingHelper(Scanner inputReader, CurrencySettings currency) {
+        System.out.println("\n----------------------------------- Shopping Helper Functions -----------------------------------");
+
+        if (currency.getCurrencyIdentifier() != null || currency.getCurrencyValue() != 0) {
+            System.out.println("\n\nCurrency Properties");
+            System.out.println("________________________________________________________");
+            if (currency.getCurrencyIdentifier() != "")
+                System.out.println("Current currency identifier is: " + currency.getCurrencyIdentifier());
+
+            if (currency.getCurrencyValue() != 0)
+                System.out.println("Current currency value is: " + currency.getCurrencyValue());
+        }
+
+        System.out.println("\nAlternatives");
+        System.out.println("________________________________________________________");
+        System.out.println("1: Convert one value from SEK to another currency");
+        System.out.println("2: Convert multiple values from SEK to another currency");
+        System.out.println("3: Change Currency Settings");
+
+        System.out.print("\nSelect an alternative: ");
+
         int input = inputReader.nextInt();
         if (input == 0) {
             System.out.println("You have to input a value of either 1 or 2.");
-            startShoppingHelper(inputReader);
+            startShoppingHelper(inputReader, currency);
         }
 
         switch (input) {
             case 1:
-                System.out.print("Currency value right now: ");
-                double currencyValue = inputReader.nextDouble();
+                if (currency.getCurrencyIdentifier() == null || currency.getCurrencyValue() == 0) {
+                    System.out.println("Please setup your currency settings before attempting this.");
+                    break;
+                }
 
                 System.out.print("\nInput sum: ");
                 double sum = inputReader.nextDouble();
 
-                double calculation = sum * currencyValue;
+                double calculation = sum * currency.getCurrencyValue();
                 System.out.println("Value: " + calculation);
 
                 break;
             case 2:
-                System.out.print("Current value of currency to convert to (From SEK to ANY): ");
-                currencyValue = inputReader.nextDouble();
+                if (currency.getCurrencyIdentifier() == null || currency.getCurrencyValue() == 0) {
+                    System.out.println("Please setup your currency settings before attempting this.");
+                    break;
+                }
 
                 List<Double> sums = new ArrayList<Double>();
                 int count = 0;
@@ -40,7 +80,7 @@ public class Main {
 
                 do {
                     count++;
-                    System.out.print("Input Price in SEK of " + count + " product (Negative value to exit and do calculation): ");
+                    System.out.print("\nInput price " + count + " in " + currency.getCurrencyIdentifier() + " (Negative value to exit and do calculation): ");
                     price = inputReader.nextDouble();
 
                     if (price >= 0) {
@@ -53,26 +93,43 @@ public class Main {
 
                 for (double currentSum:
                      sums) {
-                    calc = currentSum * currencyValue;
+                    calc = currentSum * currency.getCurrencyValue();
                     calculation+=calc;
                 }
 
-                System.out.println("Total: " + calculation);
+                System.out.println("\nTotal: " + calculation + " SEK");
 
                 break;
+
+            case 3:
+                System.out.print("\nCurrency Identifier (Examples: USD, AUD etc): ");
+                String currencyID = inputReader.next();
+
+                System.out.print("Currency value of " + currencyID + ": ");
+                double currencyValue = inputReader.nextDouble();
+
+                currency.setCurrencyValue(currencyValue);
+                currency.setCurrencyIdentifier(currencyID);
+
+                System.out.println("Currency information has been updated.");
         }
 
         // Start again
-        startShoppingHelper(inputReader);
+        startShoppingHelper(inputReader, currency);
     }
 
     public static void main(String[] args) {
         final double version = 0.1;
-	    System.out.println("Welcome to Shopping Helper " + version + "!");
-	    System.out.println("Simon Arledal - 2017.08.31");
+	    System.out.println("\n\nWelcome to Shopping Helper v" + version + "!");
+	    System.out.println("Created by Simon Arledal at 2017.08.31");
+	    System.out.println("E-mail me at arledal.simon@gmail.com");
 
 	    // Instantiate object and start the shopping helper
         Scanner inputReader = new Scanner(System.in);
-        startShoppingHelper(inputReader);
+
+        // Instantiate new object with currency settings
+        CurrencySettings currency = new CurrencySettings();
+
+        startShoppingHelper(inputReader, currency);
     }
 }
