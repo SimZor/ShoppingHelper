@@ -120,11 +120,11 @@ public class Main {
 
     public static void main(String[] args) {
         final double version = 0.1;
-	    System.out.println("\n\nWelcome to Shopping Helper v" + version + "!");
-	    System.out.println("Created by Simon Arledal at 2017.08.31");
-	    System.out.println("E-mail me at arledal.simon@gmail.com");
+        System.out.println("\n\nWelcome to Shopping Helper v" + version + "!");
+        System.out.println("Created by Simon Arledal at 2017.08.31");
+        System.out.println("E-mail me at arledal.simon@gmail.com");
 
-	    // Instantiate object and start the shopping helper
+        // Instantiate object and start the shopping helper
         Scanner inputReader = new Scanner(System.in);
 
         // Instantiate new object with currency settings
